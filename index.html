@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JagadeeshwarS. — AI & Data Science Student | Frontend Developer</title>
+
+  <!-- Meta Information -->
+  <meta name="description"
+    content="Portfolio of Jagadeeshwar S — B.Tech Artificial Intelligence & Data Science Student, Aspiring Frontend Developer, AI & ML Enthusiast.">
+  <meta name="author" content="Jagadeeshwar S">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jagadeeshwar S — Developer Portfolio">
+  <meta property="og:description"
+    content="Cinematic 3D Developer Portfolio. AI & Data Science student exploring modern frontend architectures and machine learning.">
+  <meta property="og:image" content="assets/profile.jpg">
+
+  <!-- Favicon (Space Monogram SVG) -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23000' stroke='%23fff' stroke-width='3'/><circle cx='50' cy='50' r='40' fill='none' stroke='rgba(255,255,255,0.2)' stroke-dasharray='4 4'/><text x='50' y='62' font-family='sans-serif' font-size='36' font-weight='900' fill='%23fff' text-anchor='middle'>JS</text></svg>">
+
+  <!-- Google Fonts: Syne, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@500;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN for Utility Classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-black text-white antialiased selection:bg-white selection:text-black">
+
+  <!-- Noise / Texture Overlay for Cinematic Grain -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Ambient Glow Elements -->
+  <div class="ambient-glow glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
+
+  <!-- 3D Three.js Canvas Container -->
+  <div id="canvas-container" aria-hidden="true">
+    <canvas id="space-canvas"></canvas>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+    <div class="nav-container max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Brand Monogram -->
+      <a href="#hero" class="brand-logo flex items-center gap-3 group" aria-label="Jagadeeshwar S Home">
+        <div
+          class="logo-box relative w-10 h-10 rounded-lg flex items-center justify-center border border-white/20 bg-white/5 backdrop-blur-md transition-all duration-300 group-hover:border-white group-hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+          <span class="font-mono text-sm font-bold tracking-widest text-white">JS</span>
+          <span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-syne text-sm font-bold tracking-wider text-white whitespace-nowrap">JAGADEESHWAR S</span>
+          <span class="font-mono text-[10px] text-gray-400 tracking-widest uppercase whitespace-nowrap">AI & DS
+            Engineer</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav
+        class="hidden md:flex items-center gap-1 bg-white/[0.03] border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-xl"
+        aria-label="Primary Navigation">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#certificates" class="nav-link">Certificates</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Desktop Action CTA -->
+      <div class="hidden md:flex items-center gap-3">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle-btn"
+          class="theme-toggle-btn p-2 rounded-lg border border-white/20 bg-white/5 hover:border-white transition-all flex items-center justify-center text-white"
+          aria-label="Toggle Theme" title="Toggle Light / Dark Mode">
+          <svg class="sun-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="moon-icon w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <a href="assets/resume.pdf" download="Jagadeeshwar_S_Resume.pdf"
+          class="btn-secondary text-xs uppercase tracking-widest py-2 px-4 flex items-center gap-2 group">
+          <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Resume
+        </a>
+        <a href="#contact" class="btn-primary text-xs uppercase tracking-widest py-2 px-4">
+          Contact Me
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn"
+        class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg border border-white/15 bg-white/5 focus:outline-none"
+        aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger-line line-1"></span>
+        <span class="hamburger-line line-2"></span>
+        <span class="hamburger-line line-3"></span>
+      </button>
+
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu"
+      class="mobile-drawer fixed inset-x-0 top-[73px] bg-black/95 backdrop-blur-2xl border-b border-white/10 px-6 py-8 flex flex-col gap-4 transform -translate-y-full opacity-0 pointer-events-none transition-all duration-300 md:hidden z-40">
+      <a href="#hero" class="mobile-nav-link">Home</a>
+      <a href="#about" class="mobile-nav-link">About</a>
+      <a href="#education" class="mobile-nav-link">Education</a>
+      <a href="#skills" class="mobile-nav-link">Skills</a>
+      <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#projects" class="mobile-nav-link">Projects</a>
+      <a href="#certificates" class="mobile-nav-link">Certificates</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+      <div class="pt-4 border-t border-white/10 flex flex-col gap-3">
+        <!-- Mobile Theme Toggle -->
+        <button id="mobile-theme-toggle-btn"
+          class="flex items-center justify-center gap-2 p-3 rounded-xl border border-white/20 bg-white/5 text-xs font-mono uppercase tracking-wider text-white">
+          <svg class="sun-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="moon-icon w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <span class="theme-text">Switch To Light Theme</span>
+        </button>
+
+        <a href="assets/resume.pdf" download="Jagadeeshwar_S_Resume.pdf"
+          class="btn-secondary text-center py-3 text-xs uppercase tracking-widest">
+          Download Resume (PDF)
+        </a>
+        <a href="#contact" class="btn-primary text-center py-3 text-xs uppercase tracking-widest">
+          Initiate Contact
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-6 overflow-hidden">
+      <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+        <!-- Left Content Column -->
+        <div class="lg:col-span-7 flex flex-col items-start z-10">
+
+          <!-- Status Pill -->
+          <div
+            class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md mb-6 hover:border-white/30 transition-all">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            </span>
+            <span class="font-mono text-xs uppercase tracking-wider text-gray-300">Available For Internships &
+              Roles</span>
+          </div>
+
+          <!-- Small Greeting -->
+          <p class="font-mono text-sm tracking-[0.3em] uppercase text-gray-400 mb-2 flex items-center gap-3">
+            <span class="w-8 h-[1px] bg-gray-500"></span>
+            HELLO, I'M
+          </p>
+
+          <!-- Main Name Heading -->
+          <h1 class="hero-title font-syne font-extrabold tracking-tight text-white mb-4">
+            JAGADEESHWAR <span class="text-stroke">S.</span>
+          </h1>
+
+          <!-- Professional Titles -->
+          <div class="mb-5">
+            <h2 class="text-xl sm:text-2xl font-medium text-gray-200 tracking-wide font-syne">
+              Artificial Intelligence &amp; Data Science Student
+            </h2>
+            <p class="font-mono text-sm text-gray-400 mt-1">
+              Aspiring Frontend Developer &bull; AI &amp; ML Enthusiast
+            </p>
+          </div>
+
+          <!-- Short Bio -->
+          <p class="text-base sm:text-lg text-gray-400 max-w-2xl leading-relaxed mb-8 font-light">
+            A passionate technology student exploring frontend development, artificial intelligence, machine learning,
+            and modern web experiences through continuous learning and practical projects.
+          </p>
+
+          <!-- Metrics / Credential Chips -->
+          <div class="grid grid-cols-3 gap-3 w-full max-w-lg mb-8">
+            <div class="metric-chip p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+              <span class="font-syne text-xl font-bold text-white block">8.47</span>
+              <span class="font-mono text-[11px] text-gray-400 uppercase tracking-wider block">B.Tech CGPA</span>
+            </div>
+            <div class="metric-chip p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+              <span class="font-syne text-xl font-bold text-white block">8+</span>
+              <span class="font-mono text-[11px] text-gray-400 uppercase tracking-wider block">Certifications</span>
+            </div>
+            <div class="metric-chip p-3 rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-md">
+              <span class="font-syne text-xl font-bold text-white block">CodeAlpha</span>
+              <span class="font-mono text-[11px] text-gray-400 uppercase tracking-wider block">Frontend Intern</span>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-4 mb-10">
+            <a href="#projects"
+              class="btn-primary group flex items-center gap-3 px-6 py-3.5 text-xs uppercase tracking-widest font-semibold">
+              <span>Explore My Work</span>
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+            <a href="assets/resume.pdf" download="Jagadeeshwar_S_Resume.pdf"
+              class="btn-secondary group flex items-center gap-3 px-6 py-3.5 text-xs uppercase tracking-widest font-semibold">
+              <svg class="w-4 h-4 transition-transform group-hover:-translate-y-0.5" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span>Download Resume</span>
+            </a>
+            <a href="#contact"
+              class="btn-ghost flex items-center gap-2 px-5 py-3.5 text-xs uppercase tracking-widest text-gray-400 hover:text-white transition-colors">
+              <span>Contact Me</span>
+              <span class="text-xs">&rarr;</span>
+            </a>
+          </div>
+
+          <!-- Social Links Quick Bar -->
+          <div class="flex items-center gap-4 text-gray-400">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-gray-500">Connect:</span>
+            <a href="https://github.com/jagadeeshwar634-coder" target="_blank" rel="noopener noreferrer"
+              class="social-icon-btn" aria-label="GitHub Profile">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/jagadeeshwar-s-b7127039a/" target="_blank" rel="noopener noreferrer"
+              class="social-icon-btn" aria-label="LinkedIn Profile">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+            <a href="mailto:jagadeeshwar634@gmail.com" class="social-icon-btn" aria-label="Send Email">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </a>
+            <a href="tel:+919047166301" class="social-icon-btn" aria-label="Call Telephone">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Right Visual 3D Showcase Column -->
+        <div class="lg:col-span-5 flex justify-center items-center z-10">
+          <div class="hero-card-container relative w-full max-w-md perspective-1000">
+
+            <!-- Floating Background Glow -->
+            <div
+              class="absolute -inset-4 bg-gradient-to-r from-white/10 to-transparent rounded-3xl blur-2xl opacity-40">
+            </div>
+
+            <!-- 3D Card Shell with Mouse Tilt -->
+            <div
+              class="hero-3d-card relative rounded-2xl border border-white/20 bg-black/60 backdrop-blur-2xl p-4 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] transition-all duration-300">
+
+              <!-- Interactive Profile Mode Controls -->
+              <div class="flex items-center justify-between mb-3 px-1">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                  <span id="profile-mode-label">Noir Mode</span>
+                </span>
+                <div
+                  class="profile-mode-selector flex items-center gap-1 bg-white/5 border border-white/15 rounded-lg p-0.5">
+                  <button type="button" class="profile-mode-btn active" data-mode="noir"
+                    title="Monochrome Noir">Noir</button>
+                  <button type="button" class="profile-mode-btn" data-mode="color" title="True Color">Color</button>
+                  <button type="button" class="profile-mode-btn" data-mode="cyber" title="Cyber Hologram">Cyber</button>
+                </div>
+              </div>
+
+              <!-- Subtle Holographic Corner Brackets -->
+              <span class="corner-bracket top-l"></span>
+              <span class="corner-bracket top-r"></span>
+              <span class="corner-bracket bot-l"></span>
+              <span class="corner-bracket bot-r"></span>
+
+              <!-- Portrait Frame -->
+              <div
+                class="profile-frame relative w-full aspect-[4/5] rounded-xl overflow-hidden border border-white/10 group cursor-pointer"
+                id="profile-frame" title="Click to cycle photo mode">
+                <img id="hero-profile-img" src="assets/profile.jpg" alt="Jagadeeshwar S — Professional Portrait"
+                  width="400" height="500" loading="eager" fetchpriority="high" decoding="async"
+                  class="profile-img w-full h-full object-cover object-center transition-all duration-500 profile-mode-noir group-hover:scale-105">
+
+                <!-- Specular Cursor Sheen Highlight -->
+                <div class="profile-sheen pointer-events-none" aria-hidden="true"></div>
+
+                <!-- Animated Cyber Scanning Laser Line -->
+                <div id="cyber-scanline" class="cyber-scanline pointer-events-none hidden"></div>
+
+                <!-- Gradient Shadow Overlay -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none">
+                </div>
+
+                <!-- Bottom Card Info Overlay -->
+                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                  <div>
+                    <p class="font-syne text-sm font-bold text-white tracking-wider">JAGADEESHWAR S.</p>
+                    <p class="font-mono text-[10px] text-gray-300 uppercase tracking-widest">Bhuvanagiri, Tamil Nadu</p>
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full border border-white/20 bg-black/70 backdrop-blur-md flex items-center justify-center">
+                    <span class="w-2 h-2 rounded-full bg-white"></span>
+                  </div>
+                </div>
+
+                <!-- Click to change hint pill -->
+                <div
+                  class="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-black/60 border border-white/20 text-[9px] font-mono text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                  Click to cycle
+                </div>
+              </div>
+
+              <!-- Floating Data Badge 1 -->
+              <div
+                class="floating-badge badge-1 absolute -top-3 -left-3 px-3 py-1.5 rounded-lg border border-white/20 bg-black/80 backdrop-blur-xl shadow-lg flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                <span class="font-mono text-[10px] text-gray-200 uppercase tracking-wider">AI &amp; DS @ JNN</span>
+              </div>
+
+              <!-- Floating Data Badge 2 -->
+              <div
+                class="floating-badge badge-2 absolute -bottom-3 -right-3 px-3 py-1.5 rounded-lg border border-white/20 bg-black/80 backdrop-blur-xl shadow-lg flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                <span class="font-mono text-[10px] text-gray-200 uppercase tracking-wider">CodeAlpha Intern</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#about"
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity"
+        aria-label="Scroll to About Section">
+        <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-gray-400">Scroll Down</span>
+        <div class="w-5 h-9 rounded-full border border-white/30 flex items-start justify-center p-1">
+          <div class="w-1 h-2 rounded-full bg-white animate-scroll-pill"></div>
+        </div>
+      </a>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section-padding relative border-t border-white/10 z-10">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="section-header mb-16">
+          <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-2">01 // DISCOVERY</p>
+          <h2 class="font-syne text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            ABOUT ME
+          </h2>
+          <div class="w-16 h-[2px] bg-white mt-4"></div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+
+          <!-- Narrative Left Column -->
+          <div class="lg:col-span-7 space-y-6 text-gray-300 leading-relaxed font-light text-base sm:text-lg">
+            <p class="text-white font-normal text-xl leading-relaxed">
+              I am a motivated <strong class="font-medium text-white">B.Tech Artificial Intelligence and Data
+                Science</strong> student at <span class="text-white border-b border-white/30">JNN Institute of
+                Engineering</span>, bridging the gap between intelligent algorithms and responsive, human-centered web
+              experiences.
+            </p>
+
+            <p>
+              My technical journey is grounded in continuous curiosity and rigorous practice. With deep practical
+              knowledge of <span class="text-white font-normal">Python, Java, HTML5, CSS3, JavaScript, Machine Learning,
+                and Generative AI</span>, I enjoy transforming ideas into functional, aesthetically refined digital
+              products.
+            </p>
+
+            <p>
+              During my virtual frontend internship with <strong class="text-white font-normal">CodeAlpha</strong>, I
+              designed and deployed dynamic applications including web calculators, interactive music players, and
+              responsive media galleries. I believe software should be not only mathematically sound and performant, but
+              visually engaging and intuitive to use.
+            </p>
+
+            <p>
+              I am eager to contribute my problem-solving ability, technical fundamentals, and fast learning capacity to
+              forward-thinking engineering teams and innovative software initiatives.
+            </p>
+
+            <!-- Quick Details Table -->
+            <div class="pt-6 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-wider w-24">Degree:</span>
+                <span class="text-sm text-white font-medium">B.Tech – AI &amp; DS</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-wider w-24">College:</span>
+                <span class="text-sm text-white font-medium">JNN Institute of Engg.</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-wider w-24">Location:</span>
+                <span class="text-sm text-white font-medium">Cuddalore, Tamil Nadu</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-wider w-24">Languages:</span>
+                <span class="text-sm text-white font-medium">English, Tamil</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Focus Cards Right Column -->
+          <div class="lg:col-span-5 grid grid-cols-1 gap-4">
+
+            <div
+              class="focus-card p-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs text-gray-400 tracking-widest">01 / DISCIPLINE</span>
+                <span
+                  class="w-2 h-2 rounded-full bg-white opacity-40 group-hover:opacity-100 transition-opacity"></span>
+              </div>
+              <h3 class="font-syne text-lg font-bold text-white mb-2">Frontend Development</h3>
+              <p class="text-sm text-gray-400 leading-relaxed font-light">
+                Crafting clean, accessible, and responsive user interfaces with semantic HTML5, modern CSS3 layouts, and
+                vanilla JavaScript interactivity.
+              </p>
+            </div>
+
+            <div
+              class="focus-card p-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs text-gray-400 tracking-widest">02 / DISCIPLINE</span>
+                <span
+                  class="w-2 h-2 rounded-full bg-white opacity-40 group-hover:opacity-100 transition-opacity"></span>
+              </div>
+              <h3 class="font-syne text-lg font-bold text-white mb-2">Artificial Intelligence &amp; ML</h3>
+              <p class="text-sm text-gray-400 leading-relaxed font-light">
+                Training and deploying machine learning models, statistical analysis, feature engineering, and
+                predictive pipelines using Python and Scikit-Learn.
+              </p>
+            </div>
+
+            <div
+              class="focus-card p-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs text-gray-400 tracking-widest">03 / DISCIPLINE</span>
+                <span
+                  class="w-2 h-2 rounded-full bg-white opacity-40 group-hover:opacity-100 transition-opacity"></span>
+              </div>
+              <h3 class="font-syne text-lg font-bold text-white mb-2">Generative AI Exploration</h3>
+              <p class="text-sm text-gray-400 leading-relaxed font-light">
+                Integrating large language models, structured prompt engineering, and rapid AI prototyping with Google
+                AI Studio and modern APIs.
+              </p>
+            </div>
+
+            <div
+              class="focus-card p-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all group">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs text-gray-400 tracking-widest">04 / DISCIPLINE</span>
+                <span
+                  class="w-2 h-2 rounded-full bg-white opacity-40 group-hover:opacity-100 transition-opacity"></span>
+              </div>
+              <h3 class="font-syne text-lg font-bold text-white mb-2">Core Programming Foundations</h3>
+              <p class="text-sm text-gray-400 leading-relaxed font-light">
+                Solid understanding of Object-Oriented Programming in Java (NPTEL Elite certified) and Python, version
+                control with Git, and algorithmic problem-solving.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EDUCATION SECTION -->
+    <section id="education" class="section-padding relative border-t border-white/10 z-10">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="section-header mb-16">
+          <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-2">02 // ACADEMIC RECORD</p>
+          <h2 class="font-syne text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            EDUCATION
+          </h2>
+          <div class="w-16 h-[2px] bg-white mt-4"></div>
+        </div>
+
+        <!-- Timeline Cards Container -->
+        <div class="relative border-l border-white/20 pl-8 ml-4 md:ml-8 space-y-12">
+
+          <!-- Degree Item -->
+          <div class="timeline-item relative group">
+            <!-- Glowing Node -->
+            <div
+              class="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full border-2 border-white bg-black flex items-center justify-center transition-all group-hover:shadow-[0_0_15px_rgba(255,255,255,0.6)]">
+              <div class="w-2 h-2 rounded-full bg-white"></div>
+            </div>
+
+            <div
+              class="education-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all">
+              <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                <span
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/5 font-mono text-xs text-white">
+                  Undergraduate &bull; B.Tech
+                </span>
+                <span class="font-mono text-xs text-gray-400 tracking-wider">Present</span>
+              </div>
+
+              <h3 class="font-syne text-2xl font-bold text-white mb-2">
+                B.Tech – Artificial Intelligence and Data Science
+              </h3>
+              <p class="text-base text-gray-300 font-medium mb-4">
+                JNN Institute of Engineering
+              </p>
+
+              <!-- Academic Performance Pill -->
+              <div class="flex flex-wrap items-center gap-3 mb-6">
+                <div class="px-3.5 py-1.5 rounded-lg border border-white/15 bg-white/5 font-mono text-xs text-white">
+                  Year I CGPA: <strong class="text-white font-bold">8.47</strong>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-lg border border-white/15 bg-white/5 font-mono text-xs text-white">
+                  Year II CGPA: <strong class="text-white font-bold">8.17</strong>
+                </div>
+              </div>
+
+              <p class="text-sm text-gray-400 font-light leading-relaxed max-w-3xl">
+                Comprehensive curriculum covering Data Structures and Algorithms, Object-Oriented Programming with Java
+                and Python, Machine Learning Principles, Relational Databases, Web Technologies, and Applied Statistics
+                for Data Science.
+              </p>
+            </div>
+          </div>
+
+          <!-- Higher Secondary (12th) -->
+          <div class="timeline-item relative group">
+            <div
+              class="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full border-2 border-white/50 bg-black flex items-center justify-center transition-all group-hover:border-white group-hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+              <div class="w-2 h-2 rounded-full bg-white/60"></div>
+            </div>
+
+            <div
+              class="education-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all">
+              <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                <span
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/5 font-mono text-xs text-white">
+                  Higher Secondary (12th Standard)
+                </span>
+                <span class="font-mono text-xs text-gray-400 tracking-wider">2024 – 2025</span>
+              </div>
+
+              <h3 class="font-syne text-xl font-bold text-white mb-2">
+                Higher Secondary School Certificate (HSC)
+              </h3>
+              <p class="text-base text-gray-300 font-medium mb-4">
+                Government Boys Higher Secondary School
+              </p>
+
+              <div
+                class="inline-block px-3.5 py-1.5 rounded-lg border border-white/15 bg-white/5 font-mono text-xs text-white mb-4">
+                Score: <strong class="text-white font-bold">75%</strong>
+              </div>
+
+              <p class="text-sm text-gray-400 font-light leading-relaxed">
+                Focused on Mathematics, Physics, Chemistry, and Computer Science, developing analytical reasoning,
+                mathematical logic, and scientific problem-solving fundamentals.
+              </p>
+            </div>
+          </div>
+
+          <!-- Secondary School (10th) -->
+          <div class="timeline-item relative group">
+            <div
+              class="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full border-2 border-white/30 bg-black flex items-center justify-center transition-all group-hover:border-white group-hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+              <div class="w-2 h-2 rounded-full bg-white/40"></div>
+            </div>
+
+            <div
+              class="education-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all">
+              <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                <span
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/5 font-mono text-xs text-white">
+                  Secondary School (10th Standard)
+                </span>
+                <span class="font-mono text-xs text-gray-400 tracking-wider">2022 – 2023</span>
+              </div>
+
+              <h3 class="font-syne text-xl font-bold text-white mb-2">
+                Secondary School Leaving Certificate (SSLC)
+              </h3>
+              <p class="text-base text-gray-300 font-medium mb-4">
+                Government Boys Higher Secondary School
+              </p>
+
+              <div
+                class="inline-block px-3.5 py-1.5 rounded-lg border border-white/15 bg-white/5 font-mono text-xs text-white mb-4">
+                Score: <strong class="text-white font-bold">70%</strong>
+              </div>
+
+              <p class="text-sm text-gray-400 font-light leading-relaxed">
+                Core secondary school curriculum establishing strong competencies in basic mathematics, science,
+                language, and foundational computing.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TECHNICAL SKILLS SECTION -->
+    <section id="skills" class="section-padding relative border-t border-white/10 z-10">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="section-header mb-16">
+          <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-2">03 // CAPABILITIES</p>
+          <h2 class="font-syne text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            TECHNICAL SKILLS
+          </h2>
+          <div class="w-16 h-[2px] bg-white mt-4"></div>
+        </div>
+
+        <!-- Skill Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Programming -->
+          <div
+            class="skill-category-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-widest">01 // LANGUAGES</span>
+                <div
+                  class="w-8 h-8 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                  &lt;/&gt;
+                </div>
+              </div>
+              <h3 class="font-syne text-xl font-bold text-white mb-3">Programming</h3>
+              <p class="text-sm text-gray-400 font-light leading-relaxed mb-6">
+                Solid foundational languages utilized for algorithm implementation, scripting, data handling, and
+                backend logic.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">Object-Oriented Design</span>
+            </div>
+          </div>
+
+          <!-- Frontend -->
+          <div
+            class="skill-category-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-widest">02 // USER INTERFACE</span>
+                <div
+                  class="w-8 h-8 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                  UI
+                </div>
+              </div>
+              <h3 class="font-syne text-xl font-bold text-white mb-3">Frontend Development</h3>
+              <p class="text-sm text-gray-400 font-light leading-relaxed mb-6">
+                Crafting modern, accessible, and high-performance interactive interfaces with clean standard web
+                technologies.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+              <span class="skill-tag">JavaScript (ES6+)</span>
+              <span class="skill-tag">DOM Manipulation</span>
+              <span class="skill-tag">Responsive Layouts</span>
+            </div>
+          </div>
+
+          <!-- AI & Data Science -->
+          <div
+            class="skill-category-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-widest">03 // INTELLIGENCE</span>
+                <div
+                  class="w-8 h-8 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                  AI
+                </div>
+              </div>
+              <h3 class="font-syne text-xl font-bold text-white mb-3">AI &amp; Data Science</h3>
+              <p class="text-sm text-gray-400 font-light leading-relaxed mb-6">
+                Applying machine learning models, statistical datasets, predictive workflows, and generative AI
+                interfaces.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">Machine Learning</span>
+              <span class="skill-tag">Generative AI</span>
+              <span class="skill-tag">Prompt Engineering</span>
+              <span class="skill-tag">Model Evaluation</span>
+              <span class="skill-tag">Data Preprocessing</span>
+            </div>
+          </div>
+
+          <!-- Developer Tools -->
+          <div
+            class="skill-category-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-widest">04 // ECOSYSTEM</span>
+                <div
+                  class="w-8 h-8 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                  CLI
+                </div>
+              </div>
+              <h3 class="font-syne text-xl font-bold text-white mb-3">Tools &amp; Workflow</h3>
+              <p class="text-sm text-gray-400 font-light leading-relaxed mb-6">
+                Version control systems, development environments, and platforms powering productive modern engineering.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">VS Code</span>
+              <span class="skill-tag">Google AI Studio</span>
+              <span class="skill-tag">PowerShell / Bash</span>
+            </div>
+          </div>
+
+          <!-- Professional Competencies -->
+          <div
+            class="skill-category-card p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md hover:border-white/30 transition-all flex flex-col justify-between group md:col-span-2 lg:col-span-2">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-mono text-xs text-gray-400 uppercase tracking-widest">05 // WORK ETHIC</span>
+                <div
+                  class="w-8 h-8 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                  &bull;&bull;&bull;
+                </div>
+              </div>
+              <h3 class="font-syne text-xl font-bold text-white mb-3">Professional Competencies</h3>
+              <p class="text-sm text-gray-400 font-light leading-relaxed mb-6">
+                Human and cognitive strengths that ensure disciplined execution, rapid adaptation to new tools, and
+                seamless team collaboration.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">Problem-Solving</span>
+              <span class="skill-tag">Logical Thinking</span>
+              <span class="skill-tag">Team Collaboration</span>
+              <span class="skill-tag">Clear Communication</span>
+              <span class="skill-tag">Time Management</span>
+              <span class="skill-tag">Quick Learning</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INTERNSHIP EXPERIENCE SECTION -->
+    <section id="experience" class="section-padding relative border-t border-white/10 z-10">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="section-header mb-16">
+          <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-2">04 // EXPERIENCE</p>
+          <h2 class="font-syne text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            INTERNSHIP EXPERIENCE
+          </h2>
+          <div class="w-16 h-[2px] bg-white mt-4"></div>
+        </div>
+
+        <!-- Experience Card -->
+        <div
+          class="experience-showcase-card rounded-3xl border border-white/15 bg-white/[0.02] backdrop-blur-xl p-8 sm:p-12 relative overflow-hidden">
+
+          <!-- Subtle decorative background badge -->
+          <div class="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-white/[0.02] pointer-events-none blur-3xl">
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+            <!-- Left Role Details -->
+            <div class="lg:col-span-7 space-y-6">
+
+              <div class="flex flex-wrap items-center gap-3">
+                <span
+                  class="px-3.5 py-1 rounded-full border border-white/20 bg-white/5 font-mono text-xs text-white uppercase tracking-wider">
+                  Virtual Internship Program
+                </span>
+                <span class="font-mono text-xs text-gray-400">
+                  Student ID: CA/DF1/228369
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-syne text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                  Frontend Developer Intern
+                </h3>
+                <p class="text-xl text-gray-300 font-medium font-syne mt-1">
+                  CodeAlpha
+                </p>
+                <p class="font-mono text-sm text-gray-400 mt-1 flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  1 August 2026 – 30 August 2026
+                </p>
+              </div>
+
+              <p class="text-gray-300 leading-relaxed font-light text-base">
+                Completed an intensive virtual internship in frontend engineering, demonstrating technical dedication,
+                structured project delivery, and clean code implementation. Built responsive and functional web
+                applications adhering to modern web design standards.
+              </p>
+
+              <!-- Key Achievements / Delivered Projects -->
+              <div class="space-y-3 pt-2">
+                <p class="font-mono text-xs uppercase tracking-widest text-gray-400 font-semibold">
+                  Core Projects Built &amp; Delivered:
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div class="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                    <span class="font-syne text-sm font-bold text-white block">Basic Calculator</span>
+                    <span class="text-xs text-gray-400">Arithmetic engine</span>
+                  </div>
+                  <div class="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                    <span class="font-syne text-sm font-bold text-white block">Music Player</span>
+                    <span class="text-xs text-gray-400">Audio playback UI</span>
+                  </div>
+                  <div class="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                    <span class="font-syne text-sm font-bold text-white block">Image Gallery</span>
+                    <span class="text-xs text-gray-400">Responsive grid &amp; modal</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tech Stack Badges -->
+              <div class="flex flex-wrap gap-2 pt-2">
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript (ES6+)</span>
+                <span class="skill-tag">Responsive Design</span>
+                <span class="skill-tag">DOM Manipulation</span>
+              </div>
+
+            </div>
+
+            <!-- Right Certificate Preview Card -->
+            <div class="lg:col-span-5 flex flex-col items-center">
+              <div
+                class="certificate-thumb-container relative w-full max-w-sm rounded-2xl border border-white/20 bg-black/50 p-3 shadow-2xl group cursor-pointer"
+                onclick="openLightbox('assets/codealpha-certificate.png', 'CodeAlpha Frontend Development Virtual Internship Certificate', 'Student ID: CA/DF1/228369 • 1 August 2026 to 30 August 2026')">
+                <div class="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+                  <img src="assets/codealpha-certificate.png"
+                    alt="CodeAlpha Frontend Development Virtual Internship Certificate"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                  <div
+                    class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="btn-primary text-xs py-2 px-4 shadow-xl">
+                      Click To Enlarge
+                    </span>
+                  </div>
+                </div>
+                <div class="pt-3 px-1 flex items-center justify-between">
+                  <span class="font-mono text-xs text-gray-300">Verified Certificate</span>
+                  <span class="font-mono text-xs text-white font-bold">&nearr; View</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="section-padding relative border-t border-white/10 z-10">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="section-header mb-16">
+          <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-2">05 // SHOWCASE</p>
+          <h2 class="font-syne text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            FEATURED PROJECTS
+          </h2>
+          <div class="w-16 h-[2px] bg-white mt-4"></div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          <!-- Project 1: BookSky -->
+          <div
+            class="project-card rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md overflow-hidden hover:border-white/30 transition-all flex flex-col group">
+            <div class="project-image-box relative aspect-video overflow-hidden border-b border-white/10 bg-zinc-950">
+              <img src="assets/preview-booksky.png" alt="BookSky Web Application Preview"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute top-4 right-4">
+                <span
+                  class="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md">
+                  Web App
+                </span>
+              </div>
+            </div>
+
+            <div class="p-8 flex flex-col justify-between flex-grow space-y-6">
+              <div>
+                <h3 class="font-syne text-2xl font-bold text-white group-hover:text-gray-200 transition-colors">
+                  BookSky
+                </h3>
+                <p class="font-mono text-xs text-gray-400 mt-1 mb-4">
+                  Interactive Book Management &amp; Catalog System
+                </p>
+                <p class="text-sm text-gray-300 font-light leading-relaxed">
+                  Web application for managing and displaying book information. Allows users to dynamically catalog book
+                  titles, authors, and personal reviews with modal interactions and client-side persistence.
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex flex-wrap gap-2">
+                  <span class="skill-tag">HTML5</span>
+                  <span class="skill-tag">CSS3</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">DOM API</span>
+                </div>
+
+                <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                  <a href="https://github.com/jagadeeshwar634-coder/booksky" target="_blank" rel="noopener noreferrer"
+                    class="btn-secondary text-xs uppercase tracking-wider py-2 px-4 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                    GitHub Code
+                  </a>
+                  <span class="font-mono text-xs text-gray-500">Repository Live</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Music Player -->
+          <div
+            class="project-card rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md overflow-hidden hover:border-white/30 transition-all flex flex-col group">
+            <div class="project-image-box relative aspect-video overflow-hidden border-b border-white/10 bg-zinc-950">
+              <img src="assets/preview-music.png" alt="Music Player Web Application Preview"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute top-4 right-4">
+                <span
+                  class="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md">
+                  Audio App
+                </span>
+              </div>
+            </div>
+
+            <div class="p-8 flex flex-col justify-between flex-grow space-y-6">
+              <div>
+                <h3 class="font-syne text-2xl font-bold text-white group-hover:text-gray-200 transition-colors">
+                  Music Player
+                </h3>
+                <p class="font-mono text-xs text-gray-400 mt-1 mb-4">
+                  Interactive Audio Web Application &bull; CodeAlpha
+                </p>
+                <p class="text-sm text-gray-300 font-light leading-relaxed">
+                  Full-featured web music player featuring seamless audio playback, track scrub bar, play/pause
+                  controls, volume sliders, track listing, and dynamic album artwork displays.
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex flex-wrap gap-2">
+                  <span class="skill-tag">HTML5 Audio</span>
+                  <span class="skill-tag">CSS3</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">Media Controls</span>
+                </div>
+
+                <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                  <a href="https://github.com/jagadeeshwar634-coder/codealpha_music-player" target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary text-xs uppercase tracking-wider py-2 px-4 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                    GitHub Code
+                  </a>
+                  <span class="font-mono text-xs text-gray-500">Repository Live</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Image Gallery -->
+          <div
+            class="project-card rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md overflow-hidden hover:border-white/30 transition-all flex flex-col group">
+            <div class="project-image-box relative aspect-video overflow-hidden border-b border-white/10 bg-zinc-950">
+              <img src="assets/preview-gallery.png" alt="Image Gallery Preview"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute top-4 right-4">
+                <span
+                  class="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md">
+                  Media UI
+                </span>
+              </div>
+            </div>
+
+            <div class="p-8 flex flex-col justify-between flex-grow space-y-6">
+              <div>
+                <h3 class="font-syne text-2xl font-bold text-white group-hover:text-gray-200 transition-colors">
+                  Image Gallery
+                </h3>
+                <p class="font-mono text-xs text-gray-400 mt-1 mb-4">
+                  Responsive Grid &amp; Modal Viewer &bull; CodeAlpha
+                </p>
+                <p class="text-sm text-gray-300 font-light leading-relaxed">
+                  Responsive gallery website for displaying curated images. Implements CSS Grid layouts, interactive
+                  hover effects, modal zoom views, and mobile-first responsive breakpoints.
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex flex-wrap gap-2">
+                  <span class="skill-tag">HTML5</span>
+                  <span class="skill-tag">CSS Grid</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">Lightbox Modal</span>
+                </div>
+
+                <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                  <a href="https://github.com/jagadeeshwar634-coder/codealpha_my-gallery" target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary text-xs uppercase tracking-wider py-2 px-4 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                    GitHub Code
+                  </a>
+                  <span class="font-mono text-xs text-gray-500">Repository Live</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4: Basic Calculator -->
+          <div
+            class="project-card rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md overflow-hidden hover:border-white/30 transition-all flex flex-col group">
+            <div class="project-image-box relative aspect-video overflow-hidden border-b border-white/10 bg-zinc-950">
+              <img src="assets/preview-calculator.png" alt="Basic Calculator Preview"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute top-4 right-4">
+                <span
+                  class="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md">
+                  Utility Tool
+                </span>
+              </div>
+            </div>
+
+            <div class="p-8 flex flex-col justify-between flex-grow space-y-6">
+              <div>
+                <h3 class="font-syne text-2xl font-bold text-white group-hover:text-gray-200 transition-colors">
+                  Basic Calculator
+                </h3>
+                <p class="font-mono text-xs text-gray-400 mt-1 mb-4">
+                  Web-Based Arithmetic Application &bull; CodeAlpha
+                </p>
+                <p class="text-sm text-gray-300 font-light leading-relaxed">
+                  Web-based calculator for fundamental arithmetic operations. Features clear calculation display,
+                  decimal handling, operator precedence logic, and clean tactile button animations.
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex flex-wrap gap-2">
+                  <span class="skill-tag">HTML5</span>
+                  <span class="skill-tag">CSS3</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">Event Handling</span>
+                </div>
+
+                <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                  <a href="https://github.com/jagadeeshwar634-coder/codealpha_basic-calculator" target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary text-xs uppercase tracking-wider py-2 px-4 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                    GitHub Code
+                  </a>
+                  <span class="font-mono text-xs text-gray-500">Repository Live</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 5: Student Performance Prediction (AI/ML) -->
+          <div
+            class="project-card rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md overflow-hidden hover:border-white/30 transition-all flex flex-col group md:col-span-2">
+            <div class="grid grid-cols-1 lg:grid-cols-12">
+              <div
+                class="lg:col-span-5 project-image-box relative aspect-video lg:aspect-auto overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 bg-zinc-950">
+                <img src="assets/preview-student-ai.png" alt="Student Performance Prediction System Preview"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div class="absolute top-4 left-4">
+                  <span
+                    class="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md">
+                    AI &bull; Machine Learning
+                  </span>
+                </div>
+              </div>
+
+              <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-between space-y-6">
+                <div>
+                  <h3
+                    class="font-syne text-2xl sm:text-3xl font-bold text-white group-hover:text-gray-200 transition-colors">
+                    Student Performance Prediction System
+                  </h3>
+                  <p class="font-mono text-xs text-gray-400 mt-1 mb-4">
+                    Machine Learning Classification &amp; Web Inference App
+                  </p>
+                  <p class="text-sm text-gray-300 font-light leading-relaxed">
+                    End-to-end Machine Learning web application predicting student academic outcomes based on
+                    demographic and educational indicators. Built with Scikit-Learn pipelines, serialized model scalers,
+                    and a lightweight Flask web interface for interactive inference.
+                  </p>
+                </div>
+
+                <div class="space-y-4">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Scikit-Learn</span>
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Flask</span>
+                    <span class="skill-tag">Predictive Analytics</span>
+                  </div>
+
+                  <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                    <a href="https://github.com/jagadeeshwar634-coder/student-performance-prediction" target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-secondary text-xs uppercase tracking-wider py-2 px-4 flex items-center gap-2">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                      </svg>
+                      GitHub Code
+                    </a>
+                    <span class="font-mono text-xs text-gray-500">Repository Live</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CERTIFICATES SECTION -->
+    <section id="certificates" class="section-padding relative border-t border-white/10 z-10">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="section-header mb-12">
+          <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-2">06 // CREDENTIALS</p>
+          <h2 class="font-syne text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            CERTIFICATES &amp; HONORS
+          </h2>
+          <div class="w-16 h-[2px] bg-white mt-4"></div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="cert-filter-bar flex flex-wrap gap-2 mb-10">
+          <button class="cert-filter-btn active" data-filter="all">All Certificates (8)</button>
+          <button class="cert-filter-btn" data-filter="ai">AI &amp; Data Science</button>
+          <button class="cert-filter-btn" data-filter="programming">Programming &amp; Web</button>
+          <button class="cert-filter-btn" data-filter="tools">Developer Tools</button>
+        </div>
+
+        <!-- Certificate Cards Grid -->
+        <div class="cert-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <!-- Cert 1: CodeAlpha -->
+          <div class="cert-card group cursor-pointer" data-category="programming"
+            onclick="openLightbox('assets/codealpha-certificate.png', 'CodeAlpha — Frontend Development Virtual Internship', 'Issued September 1, 2026 • Student ID: CA/DF1/228369 • Period: 1 Aug 2026 – 30 Aug 2026')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/codealpha-certificate.png" alt="CodeAlpha Frontend Development Internship Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">CodeAlpha</span>
+                <span class="font-mono text-[10px] text-white">Aug 2026</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                Frontend Development Virtual Internship
+              </h4>
+              <p class="text-xs text-gray-400">Virtual Internship Program</p>
+            </div>
+          </div>
+
+          <!-- Cert 2: NPTEL Java -->
+          <div class="cert-card group cursor-pointer" data-category="programming"
+            onclick="openLightbox('assets/nptel-java-certificate.png', 'NPTEL / IIT Kharagpur — Programming in Java', 'Elite Grade (Score: 86%) • Jul–Oct 2026 (12 week course) • Roll: NPTEL26CS153S116660050')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/nptel-java-certificate.png" alt="NPTEL Programming in Java Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">NPTEL &bull; IIT KGP</span>
+                <span class="font-mono text-[10px] text-white">Elite 86%</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                Programming in Java
+              </h4>
+              <p class="text-xs text-gray-400">Jul–Oct 2026 &bull; MoE Govt. of India</p>
+            </div>
+          </div>
+
+          <!-- Cert 3: Udemy GitHub Copilot -->
+          <div class="cert-card group cursor-pointer" data-category="tools"
+            onclick="openLightbox('assets/udemy-copilot-certificate.png', 'Udemy — GitHub Copilot: The Complete Guide 2026', 'Instructors: Alex Dan • Length: 7 total hours • Certificate UC-b1d90b04-cc9e-4e6c-9272-35ef941afa7d')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/udemy-copilot-certificate.png" alt="Udemy GitHub Copilot Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">Udemy</span>
+                <span class="font-mono text-[10px] text-white">7 Hours</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                GitHub Copilot – Complete Guide 2026
+              </h4>
+              <p class="text-xs text-gray-400">AI-Assisted Software Development</p>
+            </div>
+          </div>
+
+          <!-- Cert 4: Udemy AI & Python Megaclass -->
+          <div class="cert-card group cursor-pointer" data-category="ai"
+            onclick="openLightbox('assets/udemy-ai-certificate.png', 'Udemy — AI & Python Development Megaclass (300+ Hands-on Projects)', 'Instructor: School of AI • Length: 58 total hours • Certificate UC-85a93f50-b002-41dd-b0dd-0be59a7d38a4 • Date: Aug 24, 2026')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/udemy-ai-certificate.png" alt="Udemy AI & Python Development Megaclass Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">Udemy</span>
+                <span class="font-mono text-[10px] text-white">58 Hours</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                AI &amp; Python Development Megaclass
+              </h4>
+              <p class="text-xs text-gray-400">300+ Hands-on Projects</p>
+            </div>
+          </div>
+
+          <!-- Cert 5: GUVI ChatGPT -->
+          <div class="cert-card group cursor-pointer" data-category="ai"
+            onclick="openLightbox('assets/guvi-chatgpt-certificate.png', 'GUVI / HCL — ChatGPT for Everyone: Generative AI & Prompt Engineering', 'Issued July 4, 2026 • Certificate ID: 07j7334Q864K61MEB1 • Google for Education Partner')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/guvi-chatgpt-certificate.png" alt="GUVI ChatGPT Generative AI Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">GUVI &bull; HCL</span>
+                <span class="font-mono text-[10px] text-white">Jul 2026</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                ChatGPT &amp; Prompt Engineering
+              </h4>
+              <p class="text-xs text-gray-400">Complete Generative AI Course</p>
+            </div>
+          </div>
+
+          <!-- Cert 6: GUVI Applied AI -->
+          <div class="cert-card group cursor-pointer" data-category="ai"
+            onclick="openLightbox('assets/guvi-applied-ai-certificate.png', 'GUVI / HCL — Certificate Program in Applied AI (Statistics to NLP)', 'Issued July 4, 2026 • Certificate ID: 12sHj0P847S741r38z • Google for Education Partner')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/guvi-applied-ai-certificate.png" alt="GUVI Applied AI Statistics to NLP Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">GUVI &bull; HCL</span>
+                <span class="font-mono text-[10px] text-white">Jul 2026</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                Applied AI (Statistics to NLP)
+              </h4>
+              <p class="text-xs text-gray-400">Specialized AI Curriculum</p>
+            </div>
+          </div>
+
+          <!-- Cert 7: GUVI Google AI Studio -->
+          <div class="cert-card group cursor-pointer" data-category="ai"
+            onclick="openLightbox('assets/guvi-speech-ai-certificate.png', 'GUVI / HCL — Build & Deploy AI Apps with Google AI Studio', 'Multilingual AI Speech App Development • Issued June 29, 2026 • Certificate ID: l17lv82CT7Y4xQj254')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/guvi-speech-ai-certificate.png" alt="GUVI Google AI Studio Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">Google AI Studio</span>
+                <span class="font-mono text-[10px] text-white">Jun 2026</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                Multilingual AI Speech App Dev
+              </h4>
+              <p class="text-xs text-gray-400">GUVI &bull; HCL Certification</p>
+            </div>
+          </div>
+
+          <!-- Cert 8: Infosys Python -->
+          <div class="cert-card group cursor-pointer" data-category="programming"
+            onclick="openLightbox('assets/infosys-python-certificate.png', 'Infosys Springboard — Basics of Python', 'Issued Saturday, July 4, 2026 • Verified on onwingspan.com • Infosys Limited')">
+            <div
+              class="cert-image-frame relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 mb-4">
+              <img src="assets/infosys-python-certificate.png" alt="Infosys Springboard Basics of Python Certificate"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div
+                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="btn-primary text-[10px] py-1.5 px-3">View Fullscreen</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider">Infosys Springboard</span>
+                <span class="font-mono text-[10px] text-white">Jul 2026</span>
+              </div>
+              <h4
+                class="font-syne text-sm font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-1">
+                Basics of Python
+              </h4>
+              <p class="text-xs text-gray-400">Course Completion Certificate</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section-padding relative border-t border-white/10 z-10">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="section-header mb-16">
+          <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-2">07 // COMMUNICATE</p>
+          <h2 class="font-syne text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            GET IN TOUCH
+          </h2>
+          <div class="w-16 h-[2px] bg-white mt-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+          <!-- Contact Channels Left Column -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md space-y-6">
+
+              <div>
+                <h3 class="font-syne text-2xl font-bold text-white mb-2">Let's Connect</h3>
+                <p class="text-sm text-gray-400 font-light leading-relaxed">
+                  I am actively seeking internship and entry-level opportunities in frontend development, AI &amp; data
+                  science, and software engineering. Reach out via email, phone, or LinkedIn.
+                </p>
+              </div>
+
+              <div class="space-y-4 pt-4 border-t border-white/10">
+
+                <!-- Email Item -->
+                <a href="mailto:jagadeeshwar634@gmail.com"
+                  class="contact-channel-item flex items-center justify-between p-3.5 rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/30 transition-all group">
+                  <div class="flex items-center gap-3.5">
+                    <div
+                      class="w-10 h-10 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider block">Email
+                        Address</span>
+                      <span
+                        class="text-sm text-white font-medium group-hover:underline">jagadeeshwar634@gmail.com</span>
+                    </div>
+                  </div>
+                  <span class="font-mono text-xs text-gray-500 group-hover:text-white transition-colors">&rarr;</span>
+                </a>
+
+                <!-- Phone Item -->
+                <a href="tel:+919047166301"
+                  class="contact-channel-item flex items-center justify-between p-3.5 rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/30 transition-all group">
+                  <div class="flex items-center gap-3.5">
+                    <div
+                      class="w-10 h-10 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider block">Phone /
+                        WhatsApp</span>
+                      <span class="text-sm text-white font-medium group-hover:underline">+91 9047166301</span>
+                    </div>
+                  </div>
+                  <span class="font-mono text-xs text-gray-500 group-hover:text-white transition-colors">&rarr;</span>
+                </a>
+
+                <!-- Location Item -->
+                <div class="flex items-center gap-3.5 p-3.5 rounded-xl border border-white/10 bg-white/[0.02]">
+                  <div
+                    class="w-10 h-10 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider block">Location</span>
+                    <span class="text-sm text-white font-medium">Bhuvanagiri, Cuddalore, Tamil Nadu, India</span>
+                  </div>
+                </div>
+
+                <!-- GitHub Profile -->
+                <a href="https://github.com/jagadeeshwar634-coder" target="_blank" rel="noopener noreferrer"
+                  class="contact-channel-item flex items-center justify-between p-3.5 rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/30 transition-all group">
+                  <div class="flex items-center gap-3.5">
+                    <div
+                      class="w-10 h-10 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider block">GitHub
+                        Profile</span>
+                      <span class="text-sm text-white font-medium group-hover:underline">jagadeeshwar634-coder</span>
+                    </div>
+                  </div>
+                  <span class="font-mono text-xs text-gray-500 group-hover:text-white transition-colors">&rarr;</span>
+                </a>
+
+                <!-- LinkedIn Profile -->
+                <a href="https://www.linkedin.com/in/jagadeeshwar-s-b7127039a/" target="_blank"
+                  rel="noopener noreferrer"
+                  class="contact-channel-item flex items-center justify-between p-3.5 rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/30 transition-all group">
+                  <div class="flex items-center gap-3.5">
+                    <div
+                      class="w-10 h-10 rounded-lg border border-white/15 bg-white/5 flex items-center justify-center text-white">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wider block">LinkedIn
+                        Profile</span>
+                      <span class="text-sm text-white font-medium group-hover:underline">jagadeeshwar-s-b7127039a</span>
+                    </div>
+                  </div>
+                  <span class="font-mono text-xs text-gray-500 group-hover:text-white transition-colors">&rarr;</span>
+                </a>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Contact Form Right Column -->
+          <div class="lg:col-span-7">
+            <form id="contact-form"
+              class="p-8 sm:p-10 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-md space-y-6">
+
+              <div>
+                <h3 class="font-syne text-2xl font-bold text-white mb-2">Send A Direct Message</h3>
+                <p class="text-sm text-gray-400 font-light">
+                  Fill out the form below or write directly to <a href="mailto:jagadeeshwar634@gmail.com"
+                    class="text-white underline">jagadeeshwar634@gmail.com</a>.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label for="form-name" class="font-mono text-xs text-gray-300 uppercase tracking-wider block">Your
+                    Name</label>
+                  <input type="text" id="form-name" required placeholder="e.g. John Doe" class="form-input">
+                </div>
+                <div class="space-y-2">
+                  <label for="form-email" class="font-mono text-xs text-gray-300 uppercase tracking-wider block">Your
+                    Email</label>
+                  <input type="email" id="form-email" required placeholder="name@company.com" class="form-input">
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="form-subject"
+                  class="font-mono text-xs text-gray-300 uppercase tracking-wider block">Subject</label>
+                <input type="text" id="form-subject" required placeholder="Internship Opportunity / Project Inquiry"
+                  class="form-input">
+              </div>
+
+              <div class="space-y-2">
+                <label for="form-message"
+                  class="font-mono text-xs text-gray-300 uppercase tracking-wider block">Message</label>
+                <textarea id="form-message" required rows="5"
+                  placeholder="Hello Jagadeeshwar, we would love to discuss..."
+                  class="form-input resize-none"></textarea>
+              </div>
+
+              <button type="submit" id="form-submit-btn"
+                class="btn-primary w-full py-4 text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-3 group">
+                <span>Dispatch Transmission</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+
+              <p class="font-mono text-[11px] text-gray-500 text-center">
+                Submissions open your native mail client pre-populated with your transmission.
+              </p>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-12 relative z-10 bg-black/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+
+      <!-- Brand & Title -->
+      <div class="flex flex-col items-center md:items-start text-center md:text-left">
+        <span class="font-syne text-lg font-bold text-white tracking-wider">JAGADEESHWAR S.</span>
+        <span class="font-mono text-xs text-gray-400 mt-1">Artificial Intelligence &amp; Data Science Student &bull; JNN
+          Institute of Engg.</span>
+      </div>
+
+      <!-- Quick Nav Links -->
+      <div class="flex flex-wrap justify-center gap-6 text-xs font-mono text-gray-400">
+        <a href="#hero" class="hover:text-white transition-colors">Home</a>
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#education" class="hover:text-white transition-colors">Education</a>
+        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+        <a href="#certificates" class="hover:text-white transition-colors">Certificates</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
+
+      <!-- Back to Top & Copyright -->
+      <div class="flex items-center gap-4">
+        <span class="font-mono text-[11px] text-gray-500">&copy; 2026 Jagadeeshwar S.</span>
+        <button id="back-to-top-btn"
+          class="w-9 h-9 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white hover:border-white transition-all"
+          aria-label="Back to Top">
+          &uarr;
+        </button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- FULLSCREEN LIGHTBOX MODAL FOR CERTIFICATES & PREVIEWS -->
+  <div id="lightbox-modal"
+    class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4 sm:p-8"
+    role="dialog" aria-modal="true" aria-hidden="true">
+    <div
+      class="lightbox-shell relative max-w-5xl w-full max-h-[90vh] flex flex-col rounded-2xl border border-white/20 bg-zinc-950/90 overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.15)]">
+
+      <!-- Lightbox Header -->
+      <div class="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-black/50">
+        <div>
+          <h3 id="lightbox-title" class="font-syne text-base sm:text-lg font-bold text-white tracking-wide">
+            Certificate Preview
+          </h3>
+          <p id="lightbox-subtitle" class="font-mono text-xs text-gray-400 mt-0.5">
+            Credential Details
+          </p>
+        </div>
+        <button id="lightbox-close-btn"
+          class="w-9 h-9 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
+          aria-label="Close Preview (Escape)">
+          &times;
+        </button>
+      </div>
+
+      <!-- Lightbox Body -->
+      <div class="p-4 sm:p-6 flex-grow overflow-auto flex items-center justify-center bg-black/40">
+        <img id="lightbox-img" src="" alt="Fullscreen Certificate Preview"
+          class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl border border-white/10">
+      </div>
+
+      <!-- Lightbox Footer -->
+      <div
+        class="p-4 border-t border-white/10 flex items-center justify-between bg-black/50 text-xs font-mono text-gray-400">
+        <span>Press <kbd class="px-1.5 py-0.5 rounded border border-white/20 bg-white/5 text-white">ESC</kbd> or click
+          outside to dismiss</span>
+        <a id="lightbox-download-link" href="" download
+          class="text-white hover:underline flex items-center gap-1.5 font-medium">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Save Asset
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast"
+    class="fixed bottom-6 right-6 z-[110] px-4 py-3 rounded-xl border border-white/20 bg-black/90 backdrop-blur-xl text-white font-mono text-xs flex items-center gap-3 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 shadow-2xl">
+    <span class="toast-dot w-2 h-2 rounded-full bg-white"></span>
+    <span id="toast-message">Notification message</span>
+  </div>
+
+  <!-- Three.js Library (Local + CDN Fallback) -->
+  <script src="assets/three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+    }
+  </script>
+
+  <!-- Interactive Portfolio Script -->
+  <script src="script.js"></script>
+</body>
+
+</html>
